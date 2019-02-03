@@ -16,7 +16,6 @@ export class AppComponent {
   public fff: boolean;
   public f: FormGroup;
   public ftype;
-  private BASE64_MARKER = ';base64,';
 
   constructor(
     public rest: RestService,
@@ -45,7 +44,6 @@ export class AppComponent {
         });
         let uri = this.f.value.file.value;
         let t = this.ftype;
-        //*
         this.rest.putGlobal('/word/update', { hash: uri, type: t })
           .subscribe(data => { alert('Actualizado') }, err => { console.log(err) })
       };
@@ -69,23 +67,10 @@ export class AppComponent {
         let t = this.ftype;
         //*
         this.rest.getGlobal('/word/get', null).subscribe(data => {
-          if (!data) {
-            this.rest.postGlobal('/word/add', { hash: uri, type: t })
+          this.rest.postGlobal('/word/add', { hash: uri, type: t })
             .subscribe(data => { alert('Guardado') }, err => { console.log(err) })
-          } else {
-            alert('Carta existente')
-          }
         }, err => { console.log(err) })
       };
-    }
-  }
-
-  update() {
-    if (this.fff) {
-
-      //*/
-    } else {
-      alert('Error')
     }
   }
 
@@ -105,8 +90,8 @@ export class AppComponent {
       let zip = new JSZip(array)
       let doc = new Docxtemplater()
       doc.loadZip(zip)
-      console.log(doc)
-      /*
+      //console.log(doc)
+      //*
       doc.setData({
         first_name: 'John',
         last_name: 'Doe',
@@ -114,7 +99,7 @@ export class AppComponent {
         description: 'New Website',
         extra_var: 'datos',
       })
-      */
+      //*/
       try {
         // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
         doc.render()
