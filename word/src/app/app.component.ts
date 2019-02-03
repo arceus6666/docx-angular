@@ -30,7 +30,7 @@ export class AppComponent {
     this.fff = false
   }
 
-  onFileChange(event) {
+  onFileChangeUpdate(event) {
     this.fff = true;
     let reader = new FileReader();
     if (event.target.files && event.target.files.length > 0) {
@@ -43,37 +43,46 @@ export class AppComponent {
           filetype: file.type,
           value: (reader.result).toString().split(',')[1]
         });
+        let uri = this.f.value.file.value;
+        let t = this.ftype;
+        //*
+        this.rest.putGlobal('/word/update', { hash: uri, type: t })
+          .subscribe(data => { alert('Actualizado') }, err => { console.log(err) })
       };
       //console.log(this.f)
     }
   }
-
-  register() {
-    if (this.fff) {
-      let uri = this.f.value.file.value;
-      let t = this.ftype;
-      //*
-      this.rest.getGlobal('/word/get', null).subscribe(data => {
-        if (!data) {
-          this.rest.postGlobal('/word/add', { hash: uri, type: t })
+  onFileChangeNew(event) {
+    this.fff = true;
+    let reader = new FileReader();
+    if (event.target.files && event.target.files.length > 0) {
+      let file = event.target.files[0];
+      reader.readAsDataURL(file);
+      reader.onload = () => {
+        this.ftype = file.type;
+        this.f.get('file').setValue({
+          filename: 'doc',
+          filetype: file.type,
+          value: (reader.result).toString().split(',')[1]
+        });
+        let uri = this.f.value.file.value;
+        let t = this.ftype;
+        //*
+        this.rest.getGlobal('/word/get', null).subscribe(data => {
+          if (!data) {
+            this.rest.postGlobal('/word/add', { hash: uri, type: t })
             .subscribe(data => { alert('Guardado') }, err => { console.log(err) })
-        } else {
-          alert('Carta existente')
-        }
-      }, err => { console.log(err) })
-      //*/
-    } else {
-      alert('Error')
+          } else {
+            alert('Carta existente')
+          }
+        }, err => { console.log(err) })
+      };
     }
   }
 
   update() {
     if (this.fff) {
-      let uri = this.f.value.file.value;
-      let t = this.ftype;
-      //*
-      this.rest.putGlobal('/word/update', { hash: uri, type: t })
-        .subscribe(data => { alert('Actualizado') }, err => { console.log(err) })
+
       //*/
     } else {
       alert('Error')
@@ -96,6 +105,8 @@ export class AppComponent {
       let zip = new JSZip(array)
       let doc = new Docxtemplater()
       doc.loadZip(zip)
+      console.log(doc)
+      /*
       doc.setData({
         first_name: 'John',
         last_name: 'Doe',
@@ -103,6 +114,7 @@ export class AppComponent {
         description: 'New Website',
         extra_var: 'datos',
       })
+      */
       try {
         // render the document (replace all occurences of {first_name} by John, {last_name} by Doe, ...)
         doc.render()

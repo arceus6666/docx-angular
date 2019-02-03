@@ -11,13 +11,14 @@
 </div>
 <div>
   <form class="upload-btn-wrapper" name="formUpload">
-    <button class="btn">Cargar Archivo</button><br />
-    <input type="file" id="mfile" (change)="onFileChange($event);" accept=".docx" />
+    <button class="btn">Nueva carta</button><br />
+    <input type="file" id="mfile" (change)="onFileChangeNew($event);" accept=".docx" />
   </form>
   <br />
-  <button class="button" name="click" (click)="register()">Nueva carta</button>
-  <br />
-  <button class="button" name="click" (click)="update()">Actualizar carta</button>
+  <form class="upload-btn-wrapper" name="formUpload2">
+    <button class="btn">Actualizar carta</button><br />
+    <input type="file" id="mfile" (change)="onFileChangeUpdate($event);" accept=".docx" />
+  </form>
   <br />
   <button class="button" name="click" (click)="download()">Descargar</button>
   <br />
