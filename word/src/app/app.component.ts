@@ -87,8 +87,8 @@ export class AppComponent {
       for (let i = 0; i < raw.length; i++) {
         array[i] = raw.charCodeAt(i)
       }
-      let zip = new JSZip(array)
       let doc = new Docxtemplater()
+      let zip = new JSZip(array)
       doc.loadZip(zip)
       //console.log(doc)
       //*
@@ -111,7 +111,7 @@ export class AppComponent {
         mimeType: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
       })
       //*
-      saveAs(buf, 'df.docx')
+      saveAs(buf, 'carta.docx')
       //*/
     }, err => {
     })
